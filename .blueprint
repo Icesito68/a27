@@ -1,0 +1,54 @@
+created:
+    - app/Http/Controllers/VideoController.php
+    - app/Http/Controllers/CommentController.php
+    - app/Http/Controllers/Api/WatchController.php
+    - database/factories/VideoFactory.php
+    - database/factories/CommentFactory.php
+    - database/factories/WatchFactory.php
+    - database/factories/ConferenceFactory.php
+    - database/factories/VenueFactory.php
+    - database/factories/SpeakerFactory.php
+    - database/factories/TalkFactory.php
+    - database/migrations/2025_01_19_195506_create_videos_table.php
+    - database/migrations/2025_01_19_195507_create_comments_table.php
+    - database/migrations/2025_01_19_195508_create_watches_table.php
+    - database/migrations/2025_01_19_195509_create_conferences_table.php
+    - database/migrations/2025_01_19_195510_create_venues_table.php
+    - database/migrations/2025_01_19_195511_create_speakers_table.php
+    - database/migrations/2025_01_19_195512_create_talks_table.php
+    - app/Models/Video.php
+    - app/Models/Comment.php
+    - app/Models/Watch.php
+    - app/Models/Conference.php
+    - app/Models/Venue.php
+    - app/Models/Speaker.php
+    - app/Models/Talk.php
+    - database/seeders/VideoSeeder.php
+    - database/seeders/CommentSeeder.php
+    - database/seeders/WatchSeeder.php
+    - database/seeders/ConferenceSeeder.php
+    - database/seeders/VenueSeeder.php
+    - database/seeders/SpeakerSeeder.php
+    - database/seeders/TalkSeeder.php
+    - tests/Feature/Http/Controllers/VideoControllerTest.php
+    - tests/Feature/Http/Controllers/CommentControllerTest.php
+    - tests/Feature/Http/Controllers/Api/WatchControllerTest.php
+    - app/Events/NewComment.php
+    - app/Http/Requests/CommentStoreRequest.php
+    - app/Http/Requests/Api/WatchStoreRequest.php
+    - app/Mail/CommentCreated.php
+    - resources/views/emails/comment-created.blade.php
+    - resources/views/video/index.blade.php
+    - resources/views/video/show.blade.php
+    - resources/views/comment/create.blade.php
+updated:
+    - routes/web.php
+models:
+    User: {  }
+    Video: { title: string, synopsis: 'longtext nullable', duration: 'decimal:8,2', relationships: { hasMany: Comment } }
+    Comment: { user_id: id, video_id: id, content: longtext, approved: boolean, relationships: { belongsTo: Video } }
+    Watch: { user_id: id, video_id: id, completed_at: datetime, timestamps: false }
+    Conference: { name: string, city: string, country: string, postal_code: string, relationships: { hasMany: 'Venue, Speaker' } }
+    Venue: { name: string, description: string, date_start: date, date_end: date, status: 'enum:pending,active,cancelled', region: string, relationships: { belongsTo: Conference } }
+    Speaker: { name: string, email: email, biography: text, twitter: string, relationships: { hasMany: 'Venue, Talk' } }
+    Talk: { title: string, description: longtext, speaker_id: id, relationships: { belongsTo: Conference } }
